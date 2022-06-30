@@ -4,8 +4,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: "Inter, sans-serif",
-        mono: "Quattrocento, sans-serif",
-        text: "Ruda, sans-serif",
+        quato: "Quattrocento, sans-serif",
+        ruda: "Ruda, sans-serif",
       },
       colors: {
         yellow: {
