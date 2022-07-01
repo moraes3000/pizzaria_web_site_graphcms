@@ -37,7 +37,7 @@ export function NavBar() {
                 </NavLink >
               </li>
               <li>
-                <NavLink to='/menu'
+                <NavLink to='/menu/todas'
                   className='hover:text-gray-300 transition-colors '
                 >
                   Menu

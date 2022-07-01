@@ -1,0 +1,19 @@
+  query GetCategoriSlug ($slug:  String){
+    categorias(where: {slug: $slug}) {
+      id
+      slug
+      nomeDaCategoria
+      sabors {
+        nome
+        slug
+        id
+        valor
+        descricaoIngredientes {
+          text
+        }
+        foto {
+          url
+        }
+      }
+    }
+  }

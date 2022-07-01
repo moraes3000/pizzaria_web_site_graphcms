@@ -1,0 +1,14 @@
+query getSaborAll {
+  sabors(orderBy: nome_ASC) {
+    id
+    nome
+    slug
+    valor
+    foto {
+      url
+    }
+    categorias {
+      slug
+    }
+  }
+}

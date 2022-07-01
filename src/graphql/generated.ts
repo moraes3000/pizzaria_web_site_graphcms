@@ -3061,7 +3061,7 @@ export type Sabor = Node & {
   descricaoIngredientes?: Maybe<RichText>;
   /** Get the document in other stages */
   documentInStages: Array<Sabor>;
-  foto?: Maybe<Asset>;
+  foto: Asset;
   /** List of Sabor versions */
   history: Array<Version>;
   /** The unique identifier */
@@ -3079,7 +3079,7 @@ export type Sabor = Node & {
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
-  valor?: Maybe<Scalars['Int']>;
+  valor: Scalars['Int'];
 };
 
 
@@ -3160,11 +3160,11 @@ export type SaborCreateInput = {
   categorias?: InputMaybe<CategoriaCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   descricaoIngredientes?: InputMaybe<Scalars['RichTextAST']>;
-  foto?: InputMaybe<AssetCreateOneInlineInput>;
+  foto: AssetCreateOneInlineInput;
   nome: Scalars['String'];
   slug: Scalars['String'];
   updatedAt?: InputMaybe<Scalars['DateTime']>;
-  valor?: InputMaybe<Scalars['Int']>;
+  valor: Scalars['Int'];
 };
 
 export type SaborCreateManyInlineInput = {
@@ -5480,7 +5480,19 @@ export enum _SystemDateTimeFieldVariation {
 export type GetAllCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllCategoryQuery = { __typename?: 'Query', categorias: Array<{ __typename?: 'Categoria', id: string, slug: string, nomeDaCategoria?: string | null, sabors: Array<{ __typename?: 'Sabor', nome: string, slug: string, id: string, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto?: { __typename?: 'Asset', url: string } | null }> }> };
+export type GetAllCategoryQuery = { __typename?: 'Query', categorias: Array<{ __typename?: 'Categoria', id: string, slug: string, nomeDaCategoria?: string | null, sabors: Array<{ __typename?: 'Sabor', nome: string, slug: string, id: string, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto: { __typename?: 'Asset', url: string } }> }> };
+
+export type GetSaborAllQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSaborAllQuery = { __typename?: 'Query', sabors: Array<{ __typename?: 'Sabor', id: string, nome: string, slug: string, valor: number, foto: { __typename?: 'Asset', url: string }, categorias: Array<{ __typename?: 'Categoria', slug: string }> }> };
+
+export type GetCategoriSlugQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetCategoriSlugQuery = { __typename?: 'Query', categorias: Array<{ __typename?: 'Categoria', id: string, slug: string, nomeDaCategoria?: string | null, sabors: Array<{ __typename?: 'Sabor', nome: string, slug: string, id: string, valor: number, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto: { __typename?: 'Asset', url: string } }> }> };
 
 
 export const GetAllCategoryDocument = gql`
@@ -5530,3 +5542,95 @@ export function useGetAllCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetAllCategoryQueryHookResult = ReturnType<typeof useGetAllCategoryQuery>;
 export type GetAllCategoryLazyQueryHookResult = ReturnType<typeof useGetAllCategoryLazyQuery>;
 export type GetAllCategoryQueryResult = Apollo.QueryResult<GetAllCategoryQuery, GetAllCategoryQueryVariables>;
+export const GetSaborAllDocument = gql`
+    query getSaborAll {
+  sabors(orderBy: nome_ASC) {
+    id
+    nome
+    slug
+    valor
+    foto {
+      url
+    }
+    categorias {
+      slug
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSaborAllQuery__
+ *
+ * To run a query within a React component, call `useGetSaborAllQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSaborAllQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSaborAllQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSaborAllQuery(baseOptions?: Apollo.QueryHookOptions<GetSaborAllQuery, GetSaborAllQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSaborAllQuery, GetSaborAllQueryVariables>(GetSaborAllDocument, options);
+      }
+export function useGetSaborAllLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSaborAllQuery, GetSaborAllQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSaborAllQuery, GetSaborAllQueryVariables>(GetSaborAllDocument, options);
+        }
+export type GetSaborAllQueryHookResult = ReturnType<typeof useGetSaborAllQuery>;
+export type GetSaborAllLazyQueryHookResult = ReturnType<typeof useGetSaborAllLazyQuery>;
+export type GetSaborAllQueryResult = Apollo.QueryResult<GetSaborAllQuery, GetSaborAllQueryVariables>;
+export const GetCategoriSlugDocument = gql`
+    query GetCategoriSlug($slug: String) {
+  categorias(where: {slug: $slug}) {
+    id
+    slug
+    nomeDaCategoria
+    sabors {
+      nome
+      slug
+      id
+      valor
+      descricaoIngredientes {
+        text
+      }
+      foto {
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCategoriSlugQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriSlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriSlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriSlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetCategoriSlugQuery(baseOptions?: Apollo.QueryHookOptions<GetCategoriSlugQuery, GetCategoriSlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoriSlugQuery, GetCategoriSlugQueryVariables>(GetCategoriSlugDocument, options);
+      }
+export function useGetCategoriSlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoriSlugQuery, GetCategoriSlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoriSlugQuery, GetCategoriSlugQueryVariables>(GetCategoriSlugDocument, options);
+        }
+export type GetCategoriSlugQueryHookResult = ReturnType<typeof useGetCategoriSlugQuery>;
+export type GetCategoriSlugLazyQueryHookResult = ReturnType<typeof useGetCategoriSlugLazyQuery>;
+export type GetCategoriSlugQueryResult = Apollo.QueryResult<GetCategoriSlugQuery, GetCategoriSlugQueryVariables>;
