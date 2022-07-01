@@ -1,4 +1,11 @@
+import { NavLink } from "react-router-dom"
+import { useGetAllCategoryQuery } from "../../graphql/generated"
+
 export function Menu() {
+  const { data } = useGetAllCategoryQuery()
+  console.log(data)
+
+
   return (
     <div className="w-full bg-black-900 ">
       <div className="max-w-5xl  mx-auto py-4 px-5">
@@ -10,18 +17,16 @@ export function Menu() {
         </p>
         <nav className="mb-10">
           <ul className="flex gap-4">
-            <li className="text-gray-100 active">
-              <a href='#'>Todos</a>
-            </li>
             <li className="text-gray-100">
-              <a href='#'>Doce</a>
+              <NavLink to={`/menu/`}>Todas</NavLink >
             </li>
-            <li className="text-gray-100">
-              <a href='#'>Salgado</a>
-            </li>
-            <li className="text-gray-100">
-              <a href='#'>Especial</a>
-            </li>
+            {data?.categorias.map(item => {
+              return (
+                <li className="text-gray-100" key={item.slug}>
+                  <NavLink to={`/menu/${item.slug}`}>{item.nomeDaCategoria}</NavLink >
+                </li>
+              )
+            })}
           </ul>
         </nav>
         <div className="grid grid-cols-1 sm:grid-cols-2  gap-7">

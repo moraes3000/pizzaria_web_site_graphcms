@@ -1,0 +1,18 @@
+query GetAllCategory {
+  categorias {
+    id
+    slug
+    nomeDaCategoria
+    sabors {
+      nome
+      slug
+      id
+      descricaoIngredientes{
+        text
+      }
+      foto{
+        url
+      }
+    }
+  }
+}
