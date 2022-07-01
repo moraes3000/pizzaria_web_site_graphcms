@@ -26,7 +26,14 @@ export function Menu() {
         <div className="grid grid-cols-1 sm:grid-cols-2  gap-7">
           {data?.sabors.map(sabor => {
             return (
-              <ItemMenu nome={sabor.nome} valor={sabor.valor} foto={sabor.foto?.url} key={sabor.slug} />
+              <ItemMenu
+                nome={sabor.nome}
+                valor={sabor.valor}
+                foto={sabor.foto?.url}
+                descricao={sabor.descricaoIngredientes?.text}
+                slug={sabor.slug}
+                key={sabor.slug}
+              />
             )
           })}
         </div>
@@ -35,22 +42,32 @@ export function Menu() {
   )
 }
 
-function ItemMenu(props) {
+interface itemProps {
+  nome: String;
+  valor: number;
+  foto?: String;
+  descricao?: String;
+  slug: String;
+}
+
+function ItemMenu({ nome, valor, descricao, slug, foto }: itemProps) {
   return (
-    <div className="my-3 flex gap-4 " key={props.slug}>
+    <div className="my-3 flex gap-4 ">
       <div className="h-32 w-32 bg-blue-400">
-        <img
-          src={props.foto ? props.foto : `../src/assets/pizzariabg.jpg`}
-          className="object-fill  h-32 w-32"
+        <img src={foto ? `${foto}`
+          : 'https://camo.githubusercontent.com/b7b7dca15c743879821e7cfc14e8034ecee3588e221de0a6f436423e304d95f5/68747470733a2f2f7a7562652e696f2f66696c65732f706f722d756d612d626f612d63617573612f33363664616462316461323032353338616531333332396261333464393030362d696d6167652e706e67'}
+          className='object-fill  h-32 w-32'
         />
       </div>
       <div className="flex-1">
         <header className="flex justify-between items-center">
-          <strong className="text-yellow-500 font-ruda text-2xl">{props.nome}</strong>
-          <span className="text-yellow-300 font-ruda text-md">{props.valor}</span>
+          <strong className="text-yellow-500 font-ruda text-2xl">{nome}</strong>
+          <span className="text-yellow-300 font-ruda text-md">{valor}</span>
         </header>
         <div>
-          <p className="text-gray-100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac placerat dui.</p>
+          <p className="text-gray-100">
+            {descricao}
+          </p>
         </div>
       </div>
     </div>

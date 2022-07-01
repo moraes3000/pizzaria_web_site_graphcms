@@ -4,6 +4,9 @@ query getSaborAll {
     nome
     slug
     valor
+    descricaoIngredientes{
+      text
+    }
     foto {
       url
     }

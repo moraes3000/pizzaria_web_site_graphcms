@@ -5485,7 +5485,7 @@ export type GetAllCategoryQuery = { __typename?: 'Query', categorias: Array<{ __
 export type GetSaborAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSaborAllQuery = { __typename?: 'Query', sabors: Array<{ __typename?: 'Sabor', id: string, nome: string, slug: string, valor: number, foto: { __typename?: 'Asset', url: string }, categorias: Array<{ __typename?: 'Categoria', slug: string }> }> };
+export type GetSaborAllQuery = { __typename?: 'Query', sabors: Array<{ __typename?: 'Sabor', id: string, nome: string, slug: string, valor: number, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto: { __typename?: 'Asset', url: string }, categorias: Array<{ __typename?: 'Categoria', slug: string }> }> };
 
 export type GetCategoriSlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
@@ -5549,6 +5549,9 @@ export const GetSaborAllDocument = gql`
     nome
     slug
     valor
+    descricaoIngredientes {
+      text
+    }
     foto {
       url
     }
