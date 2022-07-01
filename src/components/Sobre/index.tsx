@@ -1,3 +1,5 @@
+import Img from '../../../public/assets/pizzariabg.jpg'
+
 export function Sobre() {
   return (
     <div className="w-full bg-black-900">
@@ -28,7 +30,7 @@ export function Sobre() {
         </div>
 
         <div className="flex align-center justify-center">
-          <img src='../src/assets/pizzariabg.jpg' className="object-cover h-80" />
+          <img src={Img} className="object-cover h-80" />
         </div>
       </div>
     </div >
