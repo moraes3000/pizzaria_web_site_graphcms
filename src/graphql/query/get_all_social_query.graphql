@@ -1,0 +1,10 @@
+query GetAllSocial {
+  socialMedias {
+    redeSocial
+    id
+    link
+    icone {
+      url(transformation: {image: {resize: {width: 30, height: 30}}})
+    }
+  }
+}

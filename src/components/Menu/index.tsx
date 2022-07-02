@@ -16,7 +16,7 @@ export function Menu() {
           </strong>
         </p>
         <nav className="mb-10">
-          <ul className="flex gap-4">
+          <ul className="flex gap-4 flex-wrap">
             <li className="text-gray-100">
               <NavLink to={`/menu/todas`}>Todas</NavLink >
             </li>

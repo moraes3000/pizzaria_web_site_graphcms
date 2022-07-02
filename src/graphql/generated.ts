@@ -46,9 +46,11 @@ export type Asset = Node & {
   height?: Maybe<Scalars['Float']>;
   /** List of Asset versions */
   history: Array<Version>;
+  iconeSocialMedia: Array<SocialMedia>;
   /** The unique identifier */
   id: Scalars['ID'];
   imagemBanner: Array<Banner>;
+  imagemPagina: Array<Pagina>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -117,6 +119,19 @@ export type AssetHistoryArgs = {
 
 
 /** Asset system model */
+export type AssetIconeSocialMediaArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<SocialMediaOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SocialMediaWhereInput>;
+};
+
+
+/** Asset system model */
 export type AssetImagemBannerArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -126,6 +141,19 @@ export type AssetImagemBannerArgs = {
   orderBy?: InputMaybe<BannerOrderByInput>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<BannerWhereInput>;
+};
+
+
+/** Asset system model */
+export type AssetImagemPaginaArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<PaginaOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PaginaWhereInput>;
 };
 
 
@@ -200,7 +228,9 @@ export type AssetCreateInput = {
   fotoSabor?: InputMaybe<SaborCreateManyInlineInput>;
   handle: Scalars['String'];
   height?: InputMaybe<Scalars['Float']>;
+  iconeSocialMedia?: InputMaybe<SocialMediaCreateManyInlineInput>;
   imagemBanner?: InputMaybe<BannerCreateManyInlineInput>;
+  imagemPagina?: InputMaybe<PaginaCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
   mimeType?: InputMaybe<Scalars['String']>;
@@ -283,6 +313,9 @@ export type AssetManyWhereInput = {
   fotoSabor_every?: InputMaybe<SaborWhereInput>;
   fotoSabor_none?: InputMaybe<SaborWhereInput>;
   fotoSabor_some?: InputMaybe<SaborWhereInput>;
+  iconeSocialMedia_every?: InputMaybe<SocialMediaWhereInput>;
+  iconeSocialMedia_none?: InputMaybe<SocialMediaWhereInput>;
+  iconeSocialMedia_some?: InputMaybe<SocialMediaWhereInput>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -305,6 +338,9 @@ export type AssetManyWhereInput = {
   imagemBanner_every?: InputMaybe<BannerWhereInput>;
   imagemBanner_none?: InputMaybe<BannerWhereInput>;
   imagemBanner_some?: InputMaybe<BannerWhereInput>;
+  imagemPagina_every?: InputMaybe<PaginaWhereInput>;
+  imagemPagina_none?: InputMaybe<PaginaWhereInput>;
+  imagemPagina_some?: InputMaybe<PaginaWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -378,7 +414,9 @@ export type AssetUpdateInput = {
   fotoSabor?: InputMaybe<SaborUpdateManyInlineInput>;
   handle?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Float']>;
+  iconeSocialMedia?: InputMaybe<SocialMediaUpdateManyInlineInput>;
   imagemBanner?: InputMaybe<BannerUpdateManyInlineInput>;
+  imagemPagina?: InputMaybe<PaginaUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
   mimeType?: InputMaybe<Scalars['String']>;
@@ -586,6 +624,9 @@ export type AssetWhereInput = {
   height_not?: InputMaybe<Scalars['Float']>;
   /** All values that are not contained in given list. */
   height_not_in?: InputMaybe<Array<Scalars['Float']>>;
+  iconeSocialMedia_every?: InputMaybe<SocialMediaWhereInput>;
+  iconeSocialMedia_none?: InputMaybe<SocialMediaWhereInput>;
+  iconeSocialMedia_some?: InputMaybe<SocialMediaWhereInput>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -608,6 +649,9 @@ export type AssetWhereInput = {
   imagemBanner_every?: InputMaybe<BannerWhereInput>;
   imagemBanner_none?: InputMaybe<BannerWhereInput>;
   imagemBanner_some?: InputMaybe<BannerWhereInput>;
+  imagemPagina_every?: InputMaybe<PaginaWhereInput>;
+  imagemPagina_none?: InputMaybe<PaginaWhereInput>;
+  imagemPagina_some?: InputMaybe<PaginaWhereInput>;
   mimeType?: InputMaybe<Scalars['String']>;
   /** All values containing the given string. */
   mimeType_contains?: InputMaybe<Scalars['String']>;
@@ -1776,6 +1820,8 @@ export type Mutation = {
   createBanner?: Maybe<Banner>;
   /** Create one categoria */
   createCategoria?: Maybe<Categoria>;
+  /** Create one pagina */
+  createPagina?: Maybe<Pagina>;
   /** Create one sabor */
   createSabor?: Maybe<Sabor>;
   /** Create one scheduledRelease */
@@ -1810,6 +1856,13 @@ export type Mutation = {
   /** Delete many Categoria documents, return deleted documents */
   deleteManyCategoriasConnection: CategoriaConnection;
   /**
+   * Delete many Pagina documents
+   * @deprecated Please use the new paginated many mutation (deleteManyPaginasConnection)
+   */
+  deleteManyPaginas: BatchPayload;
+  /** Delete many Pagina documents, return deleted documents */
+  deleteManyPaginasConnection: PaginaConnection;
+  /**
    * Delete many Sabor documents
    * @deprecated Please use the new paginated many mutation (deleteManySaborsConnection)
    */
@@ -1823,6 +1876,8 @@ export type Mutation = {
   deleteManySocialMedias: BatchPayload;
   /** Delete many SocialMedia documents, return deleted documents */
   deleteManySocialMediasConnection: SocialMediaConnection;
+  /** Delete one pagina from _all_ existing stages. Returns deleted document. */
+  deletePagina?: Maybe<Pagina>;
   /** Delete one sabor from _all_ existing stages. Returns deleted document. */
   deleteSabor?: Maybe<Sabor>;
   /** Delete and return scheduled operation */
@@ -1859,6 +1914,13 @@ export type Mutation = {
   /** Publish many Categoria documents */
   publishManyCategoriasConnection: CategoriaConnection;
   /**
+   * Publish many Pagina documents
+   * @deprecated Please use the new paginated many mutation (publishManyPaginasConnection)
+   */
+  publishManyPaginas: BatchPayload;
+  /** Publish many Pagina documents */
+  publishManyPaginasConnection: PaginaConnection;
+  /**
    * Publish many Sabor documents
    * @deprecated Please use the new paginated many mutation (publishManySaborsConnection)
    */
@@ -1872,6 +1934,8 @@ export type Mutation = {
   publishManySocialMedias: BatchPayload;
   /** Publish many SocialMedia documents */
   publishManySocialMediasConnection: SocialMediaConnection;
+  /** Publish one pagina */
+  publishPagina?: Maybe<Pagina>;
   /** Publish one sabor */
   publishSabor?: Maybe<Sabor>;
   /** Publish one socialMedia */
@@ -1882,6 +1946,8 @@ export type Mutation = {
   schedulePublishBanner?: Maybe<Banner>;
   /** Schedule to publish one categoria */
   schedulePublishCategoria?: Maybe<Categoria>;
+  /** Schedule to publish one pagina */
+  schedulePublishPagina?: Maybe<Pagina>;
   /** Schedule to publish one sabor */
   schedulePublishSabor?: Maybe<Sabor>;
   /** Schedule to publish one socialMedia */
@@ -1892,6 +1958,8 @@ export type Mutation = {
   scheduleUnpublishBanner?: Maybe<Banner>;
   /** Unpublish one categoria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishCategoria?: Maybe<Categoria>;
+  /** Unpublish one pagina from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishPagina?: Maybe<Pagina>;
   /** Unpublish one sabor from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishSabor?: Maybe<Sabor>;
   /** Unpublish one socialMedia from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -1924,6 +1992,13 @@ export type Mutation = {
   /** Find many Categoria documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyCategoriasConnection: CategoriaConnection;
   /**
+   * Unpublish many Pagina documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyPaginasConnection)
+   */
+  unpublishManyPaginas: BatchPayload;
+  /** Find many Pagina documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyPaginasConnection: PaginaConnection;
+  /**
    * Unpublish many Sabor documents
    * @deprecated Please use the new paginated many mutation (unpublishManySaborsConnection)
    */
@@ -1937,6 +2012,8 @@ export type Mutation = {
   unpublishManySocialMedias: BatchPayload;
   /** Find many SocialMedia documents that match criteria in specified stage and unpublish from target stages */
   unpublishManySocialMediasConnection: SocialMediaConnection;
+  /** Unpublish one pagina from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishPagina?: Maybe<Pagina>;
   /** Unpublish one sabor from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishSabor?: Maybe<Sabor>;
   /** Unpublish one socialMedia from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -1969,6 +2046,13 @@ export type Mutation = {
   /** Update many Categoria documents */
   updateManyCategoriasConnection: CategoriaConnection;
   /**
+   * Update many paginas
+   * @deprecated Please use the new paginated many mutation (updateManyPaginasConnection)
+   */
+  updateManyPaginas: BatchPayload;
+  /** Update many Pagina documents */
+  updateManyPaginasConnection: PaginaConnection;
+  /**
    * Update many sabors
    * @deprecated Please use the new paginated many mutation (updateManySaborsConnection)
    */
@@ -1982,6 +2066,8 @@ export type Mutation = {
   updateManySocialMedias: BatchPayload;
   /** Update many SocialMedia documents */
   updateManySocialMediasConnection: SocialMediaConnection;
+  /** Update one pagina */
+  updatePagina?: Maybe<Pagina>;
   /** Update one sabor */
   updateSabor?: Maybe<Sabor>;
   /** Update one scheduledRelease */
@@ -1994,6 +2080,8 @@ export type Mutation = {
   upsertBanner?: Maybe<Banner>;
   /** Upsert one categoria */
   upsertCategoria?: Maybe<Categoria>;
+  /** Upsert one pagina */
+  upsertPagina?: Maybe<Pagina>;
   /** Upsert one sabor */
   upsertSabor?: Maybe<Sabor>;
   /** Upsert one socialMedia */
@@ -2013,6 +2101,11 @@ export type MutationCreateBannerArgs = {
 
 export type MutationCreateCategoriaArgs = {
   data: CategoriaCreateInput;
+};
+
+
+export type MutationCreatePaginaArgs = {
+  data: PaginaCreateInput;
 };
 
 
@@ -2091,6 +2184,21 @@ export type MutationDeleteManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationDeleteManyPaginasArgs = {
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
+export type MutationDeleteManyPaginasConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
 export type MutationDeleteManySaborsArgs = {
   where?: InputMaybe<SaborManyWhereInput>;
 };
@@ -2118,6 +2226,11 @@ export type MutationDeleteManySocialMediasConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SocialMediaManyWhereInput>;
+};
+
+
+export type MutationDeletePaginaArgs = {
+  where: PaginaWhereUniqueInput;
 };
 
 
@@ -2222,6 +2335,24 @@ export type MutationPublishManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationPublishManyPaginasArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
+export type MutationPublishManyPaginasConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
 export type MutationPublishManySaborsArgs = {
   to?: Array<Stage>;
   where?: InputMaybe<SaborManyWhereInput>;
@@ -2255,6 +2386,12 @@ export type MutationPublishManySocialMediasConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   to?: Array<Stage>;
   where?: InputMaybe<SocialMediaManyWhereInput>;
+};
+
+
+export type MutationPublishPaginaArgs = {
+  to?: Array<Stage>;
+  where: PaginaWhereUniqueInput;
 };
 
 
@@ -2297,6 +2434,14 @@ export type MutationSchedulePublishCategoriaArgs = {
 };
 
 
+export type MutationSchedulePublishPaginaArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: PaginaWhereUniqueInput;
+};
+
+
 export type MutationSchedulePublishSaborArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
@@ -2336,6 +2481,14 @@ export type MutationScheduleUnpublishCategoriaArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
   where: CategoriaWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishPaginaArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: PaginaWhereUniqueInput;
 };
 
 
@@ -2433,6 +2586,24 @@ export type MutationUnpublishManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyPaginasArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyPaginasConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
 export type MutationUnpublishManySaborsArgs = {
   from?: Array<Stage>;
   where?: InputMaybe<SaborManyWhereInput>;
@@ -2466,6 +2637,12 @@ export type MutationUnpublishManySocialMediasConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   stage?: InputMaybe<Stage>;
   where?: InputMaybe<SocialMediaManyWhereInput>;
+};
+
+
+export type MutationUnpublishPaginaArgs = {
+  from?: Array<Stage>;
+  where: PaginaWhereUniqueInput;
 };
 
 
@@ -2550,6 +2727,23 @@ export type MutationUpdateManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationUpdateManyPaginasArgs = {
+  data: PaginaUpdateManyInput;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
+export type MutationUpdateManyPaginasConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: PaginaUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PaginaManyWhereInput>;
+};
+
+
 export type MutationUpdateManySaborsArgs = {
   data: SaborUpdateManyInput;
   where?: InputMaybe<SaborManyWhereInput>;
@@ -2581,6 +2775,12 @@ export type MutationUpdateManySocialMediasConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SocialMediaManyWhereInput>;
+};
+
+
+export type MutationUpdatePaginaArgs = {
+  data: PaginaUpdateInput;
+  where: PaginaWhereUniqueInput;
 };
 
 
@@ -2620,6 +2820,12 @@ export type MutationUpsertCategoriaArgs = {
 };
 
 
+export type MutationUpsertPaginaArgs = {
+  upsert: PaginaUpsertInput;
+  where: PaginaWhereUniqueInput;
+};
+
+
 export type MutationUpsertSaborArgs = {
   upsert: SaborUpsertInput;
   where: SaborWhereUniqueInput;
@@ -2652,6 +2858,468 @@ export type PageInfo = {
   pageSize?: Maybe<Scalars['Int']>;
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']>;
+};
+
+export type Pagina = Node & {
+  __typename?: 'Pagina';
+  colorBg?: Maybe<Color>;
+  conteudo?: Maybe<RichText>;
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<Pagina>;
+  /** List of Pagina versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  imagem?: Maybe<Asset>;
+  nome: Scalars['String'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  slug: Scalars['String'];
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+export type PaginaCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type PaginaDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+export type PaginaHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type PaginaImagemArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type PaginaPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type PaginaScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type PaginaUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type PaginaConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: PaginaWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type PaginaConnection = {
+  __typename?: 'PaginaConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<PaginaEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type PaginaCreateInput = {
+  colorBg?: InputMaybe<ColorInput>;
+  conteudo?: InputMaybe<Scalars['RichTextAST']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  imagem?: InputMaybe<AssetCreateOneInlineInput>;
+  nome: Scalars['String'];
+  slug: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type PaginaCreateManyInlineInput = {
+  /** Connect multiple existing Pagina documents */
+  connect?: InputMaybe<Array<PaginaWhereUniqueInput>>;
+  /** Create and connect multiple existing Pagina documents */
+  create?: InputMaybe<Array<PaginaCreateInput>>;
+};
+
+export type PaginaCreateOneInlineInput = {
+  /** Connect one existing Pagina document */
+  connect?: InputMaybe<PaginaWhereUniqueInput>;
+  /** Create and connect one Pagina document */
+  create?: InputMaybe<PaginaCreateInput>;
+};
+
+/** An edge in a connection. */
+export type PaginaEdge = {
+  __typename?: 'PaginaEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Pagina;
+};
+
+/** Identifies documents */
+export type PaginaManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<PaginaWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<PaginaWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<PaginaWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  imagem?: InputMaybe<AssetWhereInput>;
+  nome?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  nome_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  nome_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  nome_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  nome_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  nome_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  nome_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  nome_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  nome_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  nome_starts_with?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export enum PaginaOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NomeAsc = 'nome_ASC',
+  NomeDesc = 'nome_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
+export type PaginaUpdateInput = {
+  colorBg?: InputMaybe<ColorInput>;
+  conteudo?: InputMaybe<Scalars['RichTextAST']>;
+  imagem?: InputMaybe<AssetUpdateOneInlineInput>;
+  nome?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
+};
+
+export type PaginaUpdateManyInlineInput = {
+  /** Connect multiple existing Pagina documents */
+  connect?: InputMaybe<Array<PaginaConnectInput>>;
+  /** Create and connect multiple Pagina documents */
+  create?: InputMaybe<Array<PaginaCreateInput>>;
+  /** Delete multiple Pagina documents */
+  delete?: InputMaybe<Array<PaginaWhereUniqueInput>>;
+  /** Disconnect multiple Pagina documents */
+  disconnect?: InputMaybe<Array<PaginaWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing Pagina documents */
+  set?: InputMaybe<Array<PaginaWhereUniqueInput>>;
+  /** Update multiple Pagina documents */
+  update?: InputMaybe<Array<PaginaUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple Pagina documents */
+  upsert?: InputMaybe<Array<PaginaUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type PaginaUpdateManyInput = {
+  colorBg?: InputMaybe<ColorInput>;
+  conteudo?: InputMaybe<Scalars['RichTextAST']>;
+  nome?: InputMaybe<Scalars['String']>;
+};
+
+export type PaginaUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: PaginaUpdateManyInput;
+  /** Document search */
+  where: PaginaWhereInput;
+};
+
+export type PaginaUpdateOneInlineInput = {
+  /** Connect existing Pagina document */
+  connect?: InputMaybe<PaginaWhereUniqueInput>;
+  /** Create and connect one Pagina document */
+  create?: InputMaybe<PaginaCreateInput>;
+  /** Delete currently connected Pagina document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected Pagina document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single Pagina document */
+  update?: InputMaybe<PaginaUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Pagina document */
+  upsert?: InputMaybe<PaginaUpsertWithNestedWhereUniqueInput>;
+};
+
+export type PaginaUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: PaginaUpdateInput;
+  /** Unique document search */
+  where: PaginaWhereUniqueInput;
+};
+
+export type PaginaUpsertInput = {
+  /** Create document if it didn't exist */
+  create: PaginaCreateInput;
+  /** Update document if it exists */
+  update: PaginaUpdateInput;
+};
+
+export type PaginaUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: PaginaUpsertInput;
+  /** Unique document search */
+  where: PaginaWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type PaginaWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<PaginaWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<PaginaWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<PaginaWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  imagem?: InputMaybe<AssetWhereInput>;
+  nome?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  nome_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  nome_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  nome_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  nome_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  nome_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  nome_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  nome_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  nome_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  nome_starts_with?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** References Pagina record uniquely */
+export type PaginaWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export type PublishLocaleInput = {
@@ -2689,6 +3357,14 @@ export type Query = {
   categoriasConnection: CategoriaConnection;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
+  /** Retrieve a single pagina */
+  pagina?: Maybe<Pagina>;
+  /** Retrieve document version */
+  paginaVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple paginas */
+  paginas: Array<Pagina>;
+  /** Retrieve multiple paginas using the Relay connection interface */
+  paginasConnection: PaginaConnection;
   /** Retrieve a single sabor */
   sabor?: Maybe<Sabor>;
   /** Retrieve document version */
@@ -2844,6 +3520,44 @@ export type QueryNodeArgs = {
   id: Scalars['ID'];
   locales?: Array<Locale>;
   stage?: Stage;
+};
+
+
+export type QueryPaginaArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: PaginaWhereUniqueInput;
+};
+
+
+export type QueryPaginaVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryPaginasArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<PaginaOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<PaginaWhereInput>;
+};
+
+
+export type QueryPaginasConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<PaginaOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<PaginaWhereInput>;
 };
 
 
@@ -3643,7 +4357,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Banner | Categoria | Sabor | SocialMedia;
+export type ScheduledOperationAffectedDocument = Asset | Banner | Categoria | Pagina | Sabor | SocialMedia;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -4564,14 +5278,15 @@ export type SocialMedia = Node & {
   documentInStages: Array<SocialMedia>;
   /** List of SocialMedia versions */
   history: Array<Version>;
+  icone?: Maybe<Asset>;
   /** The unique identifier */
   id: Scalars['ID'];
-  link?: Maybe<Scalars['String']>;
+  link: Scalars['String'];
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  redeSocial?: Maybe<Scalars['String']>;
+  redeSocial: Scalars['String'];
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -4598,6 +5313,11 @@ export type SocialMediaHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type SocialMediaIconeArgs = {
+  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -4640,8 +5360,9 @@ export type SocialMediaConnection = {
 
 export type SocialMediaCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
-  link?: InputMaybe<Scalars['String']>;
-  redeSocial?: InputMaybe<Scalars['String']>;
+  icone?: InputMaybe<AssetCreateOneInlineInput>;
+  link: Scalars['String'];
+  redeSocial: Scalars['String'];
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4694,6 +5415,7 @@ export type SocialMediaManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  icone?: InputMaybe<AssetWhereInput>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -4804,6 +5526,7 @@ export enum SocialMediaOrderByInput {
 }
 
 export type SocialMediaUpdateInput = {
+  icone?: InputMaybe<AssetUpdateOneInlineInput>;
   link?: InputMaybe<Scalars['String']>;
   redeSocial?: InputMaybe<Scalars['String']>;
 };
@@ -4899,6 +5622,7 @@ export type SocialMediaWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  icone?: InputMaybe<AssetWhereInput>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -5487,6 +6211,11 @@ export type GetSaborAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetSaborAllQuery = { __typename?: 'Query', sabors: Array<{ __typename?: 'Sabor', id: string, nome: string, slug: string, valor: number, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto: { __typename?: 'Asset', url: string }, categorias: Array<{ __typename?: 'Categoria', slug: string }> }> };
 
+export type GetAllSocialQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSocialQuery = { __typename?: 'Query', socialMedias: Array<{ __typename?: 'SocialMedia', redeSocial: string, id: string, link: string, icone?: { __typename?: 'Asset', url: string } | null }> };
+
 export type GetCategoriSlugQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']>;
 }>;
@@ -5588,6 +6317,45 @@ export function useGetSaborAllLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetSaborAllQueryHookResult = ReturnType<typeof useGetSaborAllQuery>;
 export type GetSaborAllLazyQueryHookResult = ReturnType<typeof useGetSaborAllLazyQuery>;
 export type GetSaborAllQueryResult = Apollo.QueryResult<GetSaborAllQuery, GetSaborAllQueryVariables>;
+export const GetAllSocialDocument = gql`
+    query GetAllSocial {
+  socialMedias {
+    redeSocial
+    id
+    link
+    icone {
+      url(transformation: {image: {resize: {width: 30, height: 30}}})
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllSocialQuery__
+ *
+ * To run a query within a React component, call `useGetAllSocialQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllSocialQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllSocialQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllSocialQuery(baseOptions?: Apollo.QueryHookOptions<GetAllSocialQuery, GetAllSocialQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllSocialQuery, GetAllSocialQueryVariables>(GetAllSocialDocument, options);
+      }
+export function useGetAllSocialLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllSocialQuery, GetAllSocialQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllSocialQuery, GetAllSocialQueryVariables>(GetAllSocialDocument, options);
+        }
+export type GetAllSocialQueryHookResult = ReturnType<typeof useGetAllSocialQuery>;
+export type GetAllSocialLazyQueryHookResult = ReturnType<typeof useGetAllSocialLazyQuery>;
+export type GetAllSocialQueryResult = Apollo.QueryResult<GetAllSocialQuery, GetAllSocialQueryVariables>;
 export const GetCategoriSlugDocument = gql`
     query GetCategoriSlug($slug: String) {
   categorias(where: {slug: $slug}) {
