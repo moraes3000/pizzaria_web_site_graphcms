@@ -1,0 +1,13 @@
+query GetPageBySlug ($slug:  String){
+  pagina(where: {slug: $slug}) {
+    nome
+    slug
+    colorBg {
+      hex
+    }
+    conteudo {
+      text
+      html
+    }
+  }
+}

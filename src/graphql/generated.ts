@@ -55,6 +55,7 @@ export type Asset = Node & {
   locale: Locale;
   /** Get the other localizations for this document */
   localizations: Array<Asset>;
+  logoimgLogo: Array<Logo>;
   /** The mime type of the file */
   mimeType?: Maybe<Scalars['String']>;
   /** The time the document was published. Null on documents in draft stage. */
@@ -165,6 +166,19 @@ export type AssetLocalizationsArgs = {
 
 
 /** Asset system model */
+export type AssetLogoimgLogoArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<LogoOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LogoWhereInput>;
+};
+
+
+/** Asset system model */
 export type AssetPublishedAtArgs = {
   variation?: SystemDateTimeFieldVariation;
 };
@@ -233,6 +247,7 @@ export type AssetCreateInput = {
   imagemPagina?: InputMaybe<PaginaCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
+  logoimgLogo?: InputMaybe<LogoCreateManyInlineInput>;
   mimeType?: InputMaybe<Scalars['String']>;
   size?: InputMaybe<Scalars['Float']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
@@ -341,6 +356,9 @@ export type AssetManyWhereInput = {
   imagemPagina_every?: InputMaybe<PaginaWhereInput>;
   imagemPagina_none?: InputMaybe<PaginaWhereInput>;
   imagemPagina_some?: InputMaybe<PaginaWhereInput>;
+  logoimgLogo_every?: InputMaybe<LogoWhereInput>;
+  logoimgLogo_none?: InputMaybe<LogoWhereInput>;
+  logoimgLogo_some?: InputMaybe<LogoWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -419,6 +437,7 @@ export type AssetUpdateInput = {
   imagemPagina?: InputMaybe<PaginaUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
+  logoimgLogo?: InputMaybe<LogoUpdateManyInlineInput>;
   mimeType?: InputMaybe<Scalars['String']>;
   size?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
@@ -652,6 +671,9 @@ export type AssetWhereInput = {
   imagemPagina_every?: InputMaybe<PaginaWhereInput>;
   imagemPagina_none?: InputMaybe<PaginaWhereInput>;
   imagemPagina_some?: InputMaybe<PaginaWhereInput>;
+  logoimgLogo_every?: InputMaybe<LogoWhereInput>;
+  logoimgLogo_none?: InputMaybe<LogoWhereInput>;
+  logoimgLogo_some?: InputMaybe<LogoWhereInput>;
   mimeType?: InputMaybe<Scalars['String']>;
   /** All values containing the given string. */
   mimeType_contains?: InputMaybe<Scalars['String']>;
@@ -1809,6 +1831,416 @@ export type LocationInput = {
   longitude: Scalars['Float'];
 };
 
+export type Logo = Node & {
+  __typename?: 'Logo';
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<Logo>;
+  /** List of Logo versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  logo: Scalars['String'];
+  logoimg?: Maybe<Asset>;
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+export type LogoCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LogoDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+export type LogoHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type LogoLogoimgArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LogoPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type LogoScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type LogoUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type LogoConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: LogoWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type LogoConnection = {
+  __typename?: 'LogoConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<LogoEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type LogoCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  logo: Scalars['String'];
+  logoimg?: InputMaybe<AssetCreateOneInlineInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type LogoCreateManyInlineInput = {
+  /** Connect multiple existing Logo documents */
+  connect?: InputMaybe<Array<LogoWhereUniqueInput>>;
+  /** Create and connect multiple existing Logo documents */
+  create?: InputMaybe<Array<LogoCreateInput>>;
+};
+
+export type LogoCreateOneInlineInput = {
+  /** Connect one existing Logo document */
+  connect?: InputMaybe<LogoWhereUniqueInput>;
+  /** Create and connect one Logo document */
+  create?: InputMaybe<LogoCreateInput>;
+};
+
+/** An edge in a connection. */
+export type LogoEdge = {
+  __typename?: 'LogoEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Logo;
+};
+
+/** Identifies documents */
+export type LogoManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<LogoWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<LogoWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<LogoWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  logo?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  logo_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  logo_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  logo_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  logo_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  logo_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  logo_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  logo_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  logo_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  logo_starts_with?: InputMaybe<Scalars['String']>;
+  logoimg?: InputMaybe<AssetWhereInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export enum LogoOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  LogoAsc = 'logo_ASC',
+  LogoDesc = 'logo_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
+export type LogoUpdateInput = {
+  logo?: InputMaybe<Scalars['String']>;
+  logoimg?: InputMaybe<AssetUpdateOneInlineInput>;
+};
+
+export type LogoUpdateManyInlineInput = {
+  /** Connect multiple existing Logo documents */
+  connect?: InputMaybe<Array<LogoConnectInput>>;
+  /** Create and connect multiple Logo documents */
+  create?: InputMaybe<Array<LogoCreateInput>>;
+  /** Delete multiple Logo documents */
+  delete?: InputMaybe<Array<LogoWhereUniqueInput>>;
+  /** Disconnect multiple Logo documents */
+  disconnect?: InputMaybe<Array<LogoWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing Logo documents */
+  set?: InputMaybe<Array<LogoWhereUniqueInput>>;
+  /** Update multiple Logo documents */
+  update?: InputMaybe<Array<LogoUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple Logo documents */
+  upsert?: InputMaybe<Array<LogoUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type LogoUpdateManyInput = {
+  logo?: InputMaybe<Scalars['String']>;
+};
+
+export type LogoUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: LogoUpdateManyInput;
+  /** Document search */
+  where: LogoWhereInput;
+};
+
+export type LogoUpdateOneInlineInput = {
+  /** Connect existing Logo document */
+  connect?: InputMaybe<LogoWhereUniqueInput>;
+  /** Create and connect one Logo document */
+  create?: InputMaybe<LogoCreateInput>;
+  /** Delete currently connected Logo document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected Logo document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single Logo document */
+  update?: InputMaybe<LogoUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Logo document */
+  upsert?: InputMaybe<LogoUpsertWithNestedWhereUniqueInput>;
+};
+
+export type LogoUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: LogoUpdateInput;
+  /** Unique document search */
+  where: LogoWhereUniqueInput;
+};
+
+export type LogoUpsertInput = {
+  /** Create document if it didn't exist */
+  create: LogoCreateInput;
+  /** Update document if it exists */
+  update: LogoUpdateInput;
+};
+
+export type LogoUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: LogoUpsertInput;
+  /** Unique document search */
+  where: LogoWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type LogoWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<LogoWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<LogoWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<LogoWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  logo?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  logo_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  logo_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  logo_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  logo_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  logo_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  logo_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  logo_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  logo_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  logo_starts_with?: InputMaybe<Scalars['String']>;
+  logoimg?: InputMaybe<AssetWhereInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** References Logo record uniquely */
+export type LogoWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /**
@@ -1820,6 +2252,10 @@ export type Mutation = {
   createBanner?: Maybe<Banner>;
   /** Create one categoria */
   createCategoria?: Maybe<Categoria>;
+  /** Create one logo */
+  createLogo?: Maybe<Logo>;
+  /** Create one navBar */
+  createNavBar?: Maybe<NavBar>;
   /** Create one pagina */
   createPagina?: Maybe<Pagina>;
   /** Create one sabor */
@@ -1834,6 +2270,8 @@ export type Mutation = {
   deleteBanner?: Maybe<Banner>;
   /** Delete one categoria from _all_ existing stages. Returns deleted document. */
   deleteCategoria?: Maybe<Categoria>;
+  /** Delete one logo from _all_ existing stages. Returns deleted document. */
+  deleteLogo?: Maybe<Logo>;
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
@@ -1856,6 +2294,20 @@ export type Mutation = {
   /** Delete many Categoria documents, return deleted documents */
   deleteManyCategoriasConnection: CategoriaConnection;
   /**
+   * Delete many Logo documents
+   * @deprecated Please use the new paginated many mutation (deleteManyLogosConnection)
+   */
+  deleteManyLogos: BatchPayload;
+  /** Delete many Logo documents, return deleted documents */
+  deleteManyLogosConnection: LogoConnection;
+  /**
+   * Delete many NavBar documents
+   * @deprecated Please use the new paginated many mutation (deleteManyNavBarsConnection)
+   */
+  deleteManyNavBars: BatchPayload;
+  /** Delete many NavBar documents, return deleted documents */
+  deleteManyNavBarsConnection: NavBarConnection;
+  /**
    * Delete many Pagina documents
    * @deprecated Please use the new paginated many mutation (deleteManyPaginasConnection)
    */
@@ -1876,6 +2328,8 @@ export type Mutation = {
   deleteManySocialMedias: BatchPayload;
   /** Delete many SocialMedia documents, return deleted documents */
   deleteManySocialMediasConnection: SocialMediaConnection;
+  /** Delete one navBar from _all_ existing stages. Returns deleted document. */
+  deleteNavBar?: Maybe<NavBar>;
   /** Delete one pagina from _all_ existing stages. Returns deleted document. */
   deletePagina?: Maybe<Pagina>;
   /** Delete one sabor from _all_ existing stages. Returns deleted document. */
@@ -1892,6 +2346,8 @@ export type Mutation = {
   publishBanner?: Maybe<Banner>;
   /** Publish one categoria */
   publishCategoria?: Maybe<Categoria>;
+  /** Publish one logo */
+  publishLogo?: Maybe<Logo>;
   /**
    * Publish many Asset documents
    * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
@@ -1914,6 +2370,20 @@ export type Mutation = {
   /** Publish many Categoria documents */
   publishManyCategoriasConnection: CategoriaConnection;
   /**
+   * Publish many Logo documents
+   * @deprecated Please use the new paginated many mutation (publishManyLogosConnection)
+   */
+  publishManyLogos: BatchPayload;
+  /** Publish many Logo documents */
+  publishManyLogosConnection: LogoConnection;
+  /**
+   * Publish many NavBar documents
+   * @deprecated Please use the new paginated many mutation (publishManyNavBarsConnection)
+   */
+  publishManyNavBars: BatchPayload;
+  /** Publish many NavBar documents */
+  publishManyNavBarsConnection: NavBarConnection;
+  /**
    * Publish many Pagina documents
    * @deprecated Please use the new paginated many mutation (publishManyPaginasConnection)
    */
@@ -1934,6 +2404,8 @@ export type Mutation = {
   publishManySocialMedias: BatchPayload;
   /** Publish many SocialMedia documents */
   publishManySocialMediasConnection: SocialMediaConnection;
+  /** Publish one navBar */
+  publishNavBar?: Maybe<NavBar>;
   /** Publish one pagina */
   publishPagina?: Maybe<Pagina>;
   /** Publish one sabor */
@@ -1946,6 +2418,10 @@ export type Mutation = {
   schedulePublishBanner?: Maybe<Banner>;
   /** Schedule to publish one categoria */
   schedulePublishCategoria?: Maybe<Categoria>;
+  /** Schedule to publish one logo */
+  schedulePublishLogo?: Maybe<Logo>;
+  /** Schedule to publish one navBar */
+  schedulePublishNavBar?: Maybe<NavBar>;
   /** Schedule to publish one pagina */
   schedulePublishPagina?: Maybe<Pagina>;
   /** Schedule to publish one sabor */
@@ -1958,6 +2434,10 @@ export type Mutation = {
   scheduleUnpublishBanner?: Maybe<Banner>;
   /** Unpublish one categoria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishCategoria?: Maybe<Categoria>;
+  /** Unpublish one logo from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishLogo?: Maybe<Logo>;
+  /** Unpublish one navBar from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishNavBar?: Maybe<NavBar>;
   /** Unpublish one pagina from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishPagina?: Maybe<Pagina>;
   /** Unpublish one sabor from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -1970,6 +2450,8 @@ export type Mutation = {
   unpublishBanner?: Maybe<Banner>;
   /** Unpublish one categoria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishCategoria?: Maybe<Categoria>;
+  /** Unpublish one logo from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishLogo?: Maybe<Logo>;
   /**
    * Unpublish many Asset documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
@@ -1992,6 +2474,20 @@ export type Mutation = {
   /** Find many Categoria documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyCategoriasConnection: CategoriaConnection;
   /**
+   * Unpublish many Logo documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyLogosConnection)
+   */
+  unpublishManyLogos: BatchPayload;
+  /** Find many Logo documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyLogosConnection: LogoConnection;
+  /**
+   * Unpublish many NavBar documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyNavBarsConnection)
+   */
+  unpublishManyNavBars: BatchPayload;
+  /** Find many NavBar documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyNavBarsConnection: NavBarConnection;
+  /**
    * Unpublish many Pagina documents
    * @deprecated Please use the new paginated many mutation (unpublishManyPaginasConnection)
    */
@@ -2012,6 +2508,8 @@ export type Mutation = {
   unpublishManySocialMedias: BatchPayload;
   /** Find many SocialMedia documents that match criteria in specified stage and unpublish from target stages */
   unpublishManySocialMediasConnection: SocialMediaConnection;
+  /** Unpublish one navBar from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishNavBar?: Maybe<NavBar>;
   /** Unpublish one pagina from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishPagina?: Maybe<Pagina>;
   /** Unpublish one sabor from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -2024,6 +2522,8 @@ export type Mutation = {
   updateBanner?: Maybe<Banner>;
   /** Update one categoria */
   updateCategoria?: Maybe<Categoria>;
+  /** Update one logo */
+  updateLogo?: Maybe<Logo>;
   /**
    * Update many assets
    * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
@@ -2046,6 +2546,20 @@ export type Mutation = {
   /** Update many Categoria documents */
   updateManyCategoriasConnection: CategoriaConnection;
   /**
+   * Update many logos
+   * @deprecated Please use the new paginated many mutation (updateManyLogosConnection)
+   */
+  updateManyLogos: BatchPayload;
+  /** Update many Logo documents */
+  updateManyLogosConnection: LogoConnection;
+  /**
+   * Update many navBars
+   * @deprecated Please use the new paginated many mutation (updateManyNavBarsConnection)
+   */
+  updateManyNavBars: BatchPayload;
+  /** Update many NavBar documents */
+  updateManyNavBarsConnection: NavBarConnection;
+  /**
    * Update many paginas
    * @deprecated Please use the new paginated many mutation (updateManyPaginasConnection)
    */
@@ -2066,6 +2580,8 @@ export type Mutation = {
   updateManySocialMedias: BatchPayload;
   /** Update many SocialMedia documents */
   updateManySocialMediasConnection: SocialMediaConnection;
+  /** Update one navBar */
+  updateNavBar?: Maybe<NavBar>;
   /** Update one pagina */
   updatePagina?: Maybe<Pagina>;
   /** Update one sabor */
@@ -2080,6 +2596,10 @@ export type Mutation = {
   upsertBanner?: Maybe<Banner>;
   /** Upsert one categoria */
   upsertCategoria?: Maybe<Categoria>;
+  /** Upsert one logo */
+  upsertLogo?: Maybe<Logo>;
+  /** Upsert one navBar */
+  upsertNavBar?: Maybe<NavBar>;
   /** Upsert one pagina */
   upsertPagina?: Maybe<Pagina>;
   /** Upsert one sabor */
@@ -2101,6 +2621,16 @@ export type MutationCreateBannerArgs = {
 
 export type MutationCreateCategoriaArgs = {
   data: CategoriaCreateInput;
+};
+
+
+export type MutationCreateLogoArgs = {
+  data: LogoCreateInput;
+};
+
+
+export type MutationCreateNavBarArgs = {
+  data: NavBarCreateInput;
 };
 
 
@@ -2136,6 +2666,11 @@ export type MutationDeleteBannerArgs = {
 
 export type MutationDeleteCategoriaArgs = {
   where: CategoriaWhereUniqueInput;
+};
+
+
+export type MutationDeleteLogoArgs = {
+  where: LogoWhereUniqueInput;
 };
 
 
@@ -2184,6 +2719,36 @@ export type MutationDeleteManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationDeleteManyLogosArgs = {
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationDeleteManyLogosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationDeleteManyNavBarsArgs = {
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
+export type MutationDeleteManyNavBarsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
 export type MutationDeleteManyPaginasArgs = {
   where?: InputMaybe<PaginaManyWhereInput>;
 };
@@ -2226,6 +2791,11 @@ export type MutationDeleteManySocialMediasConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SocialMediaManyWhereInput>;
+};
+
+
+export type MutationDeleteNavBarArgs = {
+  where: NavBarWhereUniqueInput;
 };
 
 
@@ -2272,6 +2842,12 @@ export type MutationPublishBannerArgs = {
 export type MutationPublishCategoriaArgs = {
   to?: Array<Stage>;
   where: CategoriaWhereUniqueInput;
+};
+
+
+export type MutationPublishLogoArgs = {
+  to?: Array<Stage>;
+  where: LogoWhereUniqueInput;
 };
 
 
@@ -2335,6 +2911,42 @@ export type MutationPublishManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationPublishManyLogosArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationPublishManyLogosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationPublishManyNavBarsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
+export type MutationPublishManyNavBarsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
 export type MutationPublishManyPaginasArgs = {
   to?: Array<Stage>;
   where?: InputMaybe<PaginaManyWhereInput>;
@@ -2389,6 +3001,12 @@ export type MutationPublishManySocialMediasConnectionArgs = {
 };
 
 
+export type MutationPublishNavBarArgs = {
+  to?: Array<Stage>;
+  where: NavBarWhereUniqueInput;
+};
+
+
 export type MutationPublishPaginaArgs = {
   to?: Array<Stage>;
   where: PaginaWhereUniqueInput;
@@ -2431,6 +3049,22 @@ export type MutationSchedulePublishCategoriaArgs = {
   releaseId?: InputMaybe<Scalars['String']>;
   to?: Array<Stage>;
   where: CategoriaWhereUniqueInput;
+};
+
+
+export type MutationSchedulePublishLogoArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: LogoWhereUniqueInput;
+};
+
+
+export type MutationSchedulePublishNavBarArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: NavBarWhereUniqueInput;
 };
 
 
@@ -2484,6 +3118,22 @@ export type MutationScheduleUnpublishCategoriaArgs = {
 };
 
 
+export type MutationScheduleUnpublishLogoArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: LogoWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishNavBarArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: NavBarWhereUniqueInput;
+};
+
+
 export type MutationScheduleUnpublishPaginaArgs = {
   from?: Array<Stage>;
   releaseAt?: InputMaybe<Scalars['DateTime']>;
@@ -2525,6 +3175,12 @@ export type MutationUnpublishBannerArgs = {
 export type MutationUnpublishCategoriaArgs = {
   from?: Array<Stage>;
   where: CategoriaWhereUniqueInput;
+};
+
+
+export type MutationUnpublishLogoArgs = {
+  from?: Array<Stage>;
+  where: LogoWhereUniqueInput;
 };
 
 
@@ -2586,6 +3242,42 @@ export type MutationUnpublishManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyLogosArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyLogosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyNavBarsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyNavBarsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
 export type MutationUnpublishManyPaginasArgs = {
   from?: Array<Stage>;
   where?: InputMaybe<PaginaManyWhereInput>;
@@ -2640,6 +3332,12 @@ export type MutationUnpublishManySocialMediasConnectionArgs = {
 };
 
 
+export type MutationUnpublishNavBarArgs = {
+  from?: Array<Stage>;
+  where: NavBarWhereUniqueInput;
+};
+
+
 export type MutationUnpublishPaginaArgs = {
   from?: Array<Stage>;
   where: PaginaWhereUniqueInput;
@@ -2673,6 +3371,12 @@ export type MutationUpdateBannerArgs = {
 export type MutationUpdateCategoriaArgs = {
   data: CategoriaUpdateInput;
   where: CategoriaWhereUniqueInput;
+};
+
+
+export type MutationUpdateLogoArgs = {
+  data: LogoUpdateInput;
+  where: LogoWhereUniqueInput;
 };
 
 
@@ -2727,6 +3431,40 @@ export type MutationUpdateManyCategoriasConnectionArgs = {
 };
 
 
+export type MutationUpdateManyLogosArgs = {
+  data: LogoUpdateManyInput;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationUpdateManyLogosConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: LogoUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LogoManyWhereInput>;
+};
+
+
+export type MutationUpdateManyNavBarsArgs = {
+  data: NavBarUpdateManyInput;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
+export type MutationUpdateManyNavBarsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: NavBarUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<NavBarManyWhereInput>;
+};
+
+
 export type MutationUpdateManyPaginasArgs = {
   data: PaginaUpdateManyInput;
   where?: InputMaybe<PaginaManyWhereInput>;
@@ -2778,6 +3516,12 @@ export type MutationUpdateManySocialMediasConnectionArgs = {
 };
 
 
+export type MutationUpdateNavBarArgs = {
+  data: NavBarUpdateInput;
+  where: NavBarWhereUniqueInput;
+};
+
+
 export type MutationUpdatePaginaArgs = {
   data: PaginaUpdateInput;
   where: PaginaWhereUniqueInput;
@@ -2820,6 +3564,18 @@ export type MutationUpsertCategoriaArgs = {
 };
 
 
+export type MutationUpsertLogoArgs = {
+  upsert: LogoUpsertInput;
+  where: LogoWhereUniqueInput;
+};
+
+
+export type MutationUpsertNavBarArgs = {
+  upsert: NavBarUpsertInput;
+  where: NavBarWhereUniqueInput;
+};
+
+
 export type MutationUpsertPaginaArgs = {
   upsert: PaginaUpsertInput;
   where: PaginaWhereUniqueInput;
@@ -2835,6 +3591,530 @@ export type MutationUpsertSaborArgs = {
 export type MutationUpsertSocialMediaArgs = {
   upsert: SocialMediaUpsertInput;
   where: SocialMediaWhereUniqueInput;
+};
+
+export type NavBar = Node & {
+  __typename?: 'NavBar';
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<NavBar>;
+  /** List of NavBar versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  nome: Scalars['String'];
+  posicaoDaBarraDeNavegacao: Scalars['Int'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  slug: Scalars['String'];
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  urlDeDestino: Scalars['String'];
+};
+
+
+export type NavBarCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type NavBarDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+export type NavBarHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type NavBarPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type NavBarScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type NavBarUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type NavBarConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: NavBarWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type NavBarConnection = {
+  __typename?: 'NavBarConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<NavBarEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type NavBarCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  nome: Scalars['String'];
+  posicaoDaBarraDeNavegacao: Scalars['Int'];
+  slug: Scalars['String'];
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  urlDeDestino: Scalars['String'];
+};
+
+export type NavBarCreateManyInlineInput = {
+  /** Connect multiple existing NavBar documents */
+  connect?: InputMaybe<Array<NavBarWhereUniqueInput>>;
+  /** Create and connect multiple existing NavBar documents */
+  create?: InputMaybe<Array<NavBarCreateInput>>;
+};
+
+export type NavBarCreateOneInlineInput = {
+  /** Connect one existing NavBar document */
+  connect?: InputMaybe<NavBarWhereUniqueInput>;
+  /** Create and connect one NavBar document */
+  create?: InputMaybe<NavBarCreateInput>;
+};
+
+/** An edge in a connection. */
+export type NavBarEdge = {
+  __typename?: 'NavBarEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: NavBar;
+};
+
+/** Identifies documents */
+export type NavBarManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<NavBarWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<NavBarWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<NavBarWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  nome?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  nome_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  nome_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  nome_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  nome_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  nome_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  nome_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  nome_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  nome_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  nome_starts_with?: InputMaybe<Scalars['String']>;
+  posicaoDaBarraDeNavegacao?: InputMaybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  posicaoDaBarraDeNavegacao_gt?: InputMaybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  posicaoDaBarraDeNavegacao_gte?: InputMaybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  posicaoDaBarraDeNavegacao_in?: InputMaybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  posicaoDaBarraDeNavegacao_lt?: InputMaybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  posicaoDaBarraDeNavegacao_lte?: InputMaybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  posicaoDaBarraDeNavegacao_not?: InputMaybe<Scalars['Int']>;
+  /** All values that are not contained in given list. */
+  posicaoDaBarraDeNavegacao_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  urlDeDestino?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  urlDeDestino_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  urlDeDestino_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  urlDeDestino_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  urlDeDestino_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  urlDeDestino_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  urlDeDestino_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  urlDeDestino_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  urlDeDestino_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  urlDeDestino_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+export enum NavBarOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NomeAsc = 'nome_ASC',
+  NomeDesc = 'nome_DESC',
+  PosicaoDaBarraDeNavegacaoAsc = 'posicaoDaBarraDeNavegacao_ASC',
+  PosicaoDaBarraDeNavegacaoDesc = 'posicaoDaBarraDeNavegacao_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  UrlDeDestinoAsc = 'urlDeDestino_ASC',
+  UrlDeDestinoDesc = 'urlDeDestino_DESC'
+}
+
+export type NavBarUpdateInput = {
+  nome?: InputMaybe<Scalars['String']>;
+  posicaoDaBarraDeNavegacao?: InputMaybe<Scalars['Int']>;
+  slug?: InputMaybe<Scalars['String']>;
+  urlDeDestino?: InputMaybe<Scalars['String']>;
+};
+
+export type NavBarUpdateManyInlineInput = {
+  /** Connect multiple existing NavBar documents */
+  connect?: InputMaybe<Array<NavBarConnectInput>>;
+  /** Create and connect multiple NavBar documents */
+  create?: InputMaybe<Array<NavBarCreateInput>>;
+  /** Delete multiple NavBar documents */
+  delete?: InputMaybe<Array<NavBarWhereUniqueInput>>;
+  /** Disconnect multiple NavBar documents */
+  disconnect?: InputMaybe<Array<NavBarWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing NavBar documents */
+  set?: InputMaybe<Array<NavBarWhereUniqueInput>>;
+  /** Update multiple NavBar documents */
+  update?: InputMaybe<Array<NavBarUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple NavBar documents */
+  upsert?: InputMaybe<Array<NavBarUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type NavBarUpdateManyInput = {
+  nome?: InputMaybe<Scalars['String']>;
+  urlDeDestino?: InputMaybe<Scalars['String']>;
+};
+
+export type NavBarUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: NavBarUpdateManyInput;
+  /** Document search */
+  where: NavBarWhereInput;
+};
+
+export type NavBarUpdateOneInlineInput = {
+  /** Connect existing NavBar document */
+  connect?: InputMaybe<NavBarWhereUniqueInput>;
+  /** Create and connect one NavBar document */
+  create?: InputMaybe<NavBarCreateInput>;
+  /** Delete currently connected NavBar document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected NavBar document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single NavBar document */
+  update?: InputMaybe<NavBarUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single NavBar document */
+  upsert?: InputMaybe<NavBarUpsertWithNestedWhereUniqueInput>;
+};
+
+export type NavBarUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: NavBarUpdateInput;
+  /** Unique document search */
+  where: NavBarWhereUniqueInput;
+};
+
+export type NavBarUpsertInput = {
+  /** Create document if it didn't exist */
+  create: NavBarCreateInput;
+  /** Update document if it exists */
+  update: NavBarUpdateInput;
+};
+
+export type NavBarUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: NavBarUpsertInput;
+  /** Unique document search */
+  where: NavBarWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type NavBarWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<NavBarWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<NavBarWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<NavBarWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  nome?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  nome_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  nome_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  nome_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  nome_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  nome_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  nome_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  nome_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  nome_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  nome_starts_with?: InputMaybe<Scalars['String']>;
+  posicaoDaBarraDeNavegacao?: InputMaybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  posicaoDaBarraDeNavegacao_gt?: InputMaybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  posicaoDaBarraDeNavegacao_gte?: InputMaybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  posicaoDaBarraDeNavegacao_in?: InputMaybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  posicaoDaBarraDeNavegacao_lt?: InputMaybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  posicaoDaBarraDeNavegacao_lte?: InputMaybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  posicaoDaBarraDeNavegacao_not?: InputMaybe<Scalars['Int']>;
+  /** All values that are not contained in given list. */
+  posicaoDaBarraDeNavegacao_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  slug_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  slug_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  urlDeDestino?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  urlDeDestino_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  urlDeDestino_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  urlDeDestino_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  urlDeDestino_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  urlDeDestino_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  urlDeDestino_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  urlDeDestino_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  urlDeDestino_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  urlDeDestino_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+/** References NavBar record uniquely */
+export type NavBarWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  posicaoDaBarraDeNavegacao?: InputMaybe<Scalars['Int']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 /** An object with an ID */
@@ -3355,6 +4635,22 @@ export type Query = {
   categorias: Array<Categoria>;
   /** Retrieve multiple categorias using the Relay connection interface */
   categoriasConnection: CategoriaConnection;
+  /** Retrieve a single logo */
+  logo?: Maybe<Logo>;
+  /** Retrieve document version */
+  logoVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple logos */
+  logos: Array<Logo>;
+  /** Retrieve multiple logos using the Relay connection interface */
+  logosConnection: LogoConnection;
+  /** Retrieve a single navBar */
+  navBar?: Maybe<NavBar>;
+  /** Retrieve document version */
+  navBarVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple navBars */
+  navBars: Array<NavBar>;
+  /** Retrieve multiple navBars using the Relay connection interface */
+  navBarsConnection: NavBarConnection;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single pagina */
@@ -3513,6 +4809,82 @@ export type QueryCategoriasConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   stage?: Stage;
   where?: InputMaybe<CategoriaWhereInput>;
+};
+
+
+export type QueryLogoArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: LogoWhereUniqueInput;
+};
+
+
+export type QueryLogoVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryLogosArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<LogoOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<LogoWhereInput>;
+};
+
+
+export type QueryLogosConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<LogoOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<LogoWhereInput>;
+};
+
+
+export type QueryNavBarArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: NavBarWhereUniqueInput;
+};
+
+
+export type QueryNavBarVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryNavBarsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<NavBarOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<NavBarWhereInput>;
+};
+
+
+export type QueryNavBarsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<NavBarOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<NavBarWhereInput>;
 };
 
 
@@ -4357,7 +5729,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Banner | Categoria | Pagina | Sabor | SocialMedia;
+export type ScheduledOperationAffectedDocument = Asset | Banner | Categoria | Logo | NavBar | Pagina | Sabor | SocialMedia;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -6206,6 +7578,11 @@ export type GetAllCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllCategoryQuery = { __typename?: 'Query', categorias: Array<{ __typename?: 'Categoria', id: string, slug: string, nomeDaCategoria?: string | null, sabors: Array<{ __typename?: 'Sabor', nome: string, slug: string, id: string, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto: { __typename?: 'Asset', url: string } }> }> };
 
+export type GetAllPagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllPagesQuery = { __typename?: 'Query', paginas: Array<{ __typename?: 'Pagina', nome: string, slug: string, colorBg?: { __typename?: 'Color', hex: any } | null, conteudo?: { __typename?: 'RichText', text: string, html: string } | null }> };
+
 export type GetSaborAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6222,6 +7599,18 @@ export type GetCategoriSlugQueryVariables = Exact<{
 
 
 export type GetCategoriSlugQuery = { __typename?: 'Query', categorias: Array<{ __typename?: 'Categoria', id: string, slug: string, nomeDaCategoria?: string | null, sabors: Array<{ __typename?: 'Sabor', nome: string, slug: string, id: string, valor: number, descricaoIngredientes?: { __typename?: 'RichText', text: string } | null, foto: { __typename?: 'Asset', url: string } }> }> };
+
+export type GetBarraMenuQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBarraMenuQuery = { __typename?: 'Query', navBars: Array<{ __typename?: 'NavBar', nome: string, slug: string, urlDeDestino: string }> };
+
+export type GetPageBySlugQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPageBySlugQuery = { __typename?: 'Query', pagina?: { __typename?: 'Pagina', nome: string, slug: string, colorBg?: { __typename?: 'Color', hex: any } | null, conteudo?: { __typename?: 'RichText', text: string, html: string } | null } | null };
 
 
 export const GetAllCategoryDocument = gql`
@@ -6271,6 +7660,48 @@ export function useGetAllCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetAllCategoryQueryHookResult = ReturnType<typeof useGetAllCategoryQuery>;
 export type GetAllCategoryLazyQueryHookResult = ReturnType<typeof useGetAllCategoryLazyQuery>;
 export type GetAllCategoryQueryResult = Apollo.QueryResult<GetAllCategoryQuery, GetAllCategoryQueryVariables>;
+export const GetAllPagesDocument = gql`
+    query GetAllPages {
+  paginas {
+    nome
+    slug
+    colorBg {
+      hex
+    }
+    conteudo {
+      text
+      html
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllPagesQuery__
+ *
+ * To run a query within a React component, call `useGetAllPagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllPagesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllPagesQuery, GetAllPagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllPagesQuery, GetAllPagesQueryVariables>(GetAllPagesDocument, options);
+      }
+export function useGetAllPagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPagesQuery, GetAllPagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllPagesQuery, GetAllPagesQueryVariables>(GetAllPagesDocument, options);
+        }
+export type GetAllPagesQueryHookResult = ReturnType<typeof useGetAllPagesQuery>;
+export type GetAllPagesLazyQueryHookResult = ReturnType<typeof useGetAllPagesLazyQuery>;
+export type GetAllPagesQueryResult = Apollo.QueryResult<GetAllPagesQuery, GetAllPagesQueryVariables>;
 export const GetSaborAllDocument = gql`
     query getSaborAll {
   sabors(orderBy: nome_ASC) {
@@ -6405,3 +7836,82 @@ export function useGetCategoriSlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetCategoriSlugQueryHookResult = ReturnType<typeof useGetCategoriSlugQuery>;
 export type GetCategoriSlugLazyQueryHookResult = ReturnType<typeof useGetCategoriSlugLazyQuery>;
 export type GetCategoriSlugQueryResult = Apollo.QueryResult<GetCategoriSlugQuery, GetCategoriSlugQueryVariables>;
+export const GetBarraMenuDocument = gql`
+    query GetBarraMenu {
+  navBars(orderBy: posicaoDaBarraDeNavegacao_ASC) {
+    nome
+    slug
+    urlDeDestino
+  }
+}
+    `;
+
+/**
+ * __useGetBarraMenuQuery__
+ *
+ * To run a query within a React component, call `useGetBarraMenuQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBarraMenuQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBarraMenuQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetBarraMenuQuery(baseOptions?: Apollo.QueryHookOptions<GetBarraMenuQuery, GetBarraMenuQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBarraMenuQuery, GetBarraMenuQueryVariables>(GetBarraMenuDocument, options);
+      }
+export function useGetBarraMenuLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBarraMenuQuery, GetBarraMenuQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBarraMenuQuery, GetBarraMenuQueryVariables>(GetBarraMenuDocument, options);
+        }
+export type GetBarraMenuQueryHookResult = ReturnType<typeof useGetBarraMenuQuery>;
+export type GetBarraMenuLazyQueryHookResult = ReturnType<typeof useGetBarraMenuLazyQuery>;
+export type GetBarraMenuQueryResult = Apollo.QueryResult<GetBarraMenuQuery, GetBarraMenuQueryVariables>;
+export const GetPageBySlugDocument = gql`
+    query GetPageBySlug($slug: String) {
+  pagina(where: {slug: $slug}) {
+    nome
+    slug
+    colorBg {
+      hex
+    }
+    conteudo {
+      text
+      html
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPageBySlugQuery__
+ *
+ * To run a query within a React component, call `useGetPageBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPageBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPageBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetPageBySlugQuery(baseOptions?: Apollo.QueryHookOptions<GetPageBySlugQuery, GetPageBySlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPageBySlugQuery, GetPageBySlugQueryVariables>(GetPageBySlugDocument, options);
+      }
+export function useGetPageBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPageBySlugQuery, GetPageBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPageBySlugQuery, GetPageBySlugQueryVariables>(GetPageBySlugDocument, options);
+        }
+export type GetPageBySlugQueryHookResult = ReturnType<typeof useGetPageBySlugQuery>;
+export type GetPageBySlugLazyQueryHookResult = ReturnType<typeof useGetPageBySlugLazyQuery>;
+export type GetPageBySlugQueryResult = Apollo.QueryResult<GetPageBySlugQuery, GetPageBySlugQueryVariables>;

@@ -1,0 +1,7 @@
+query GetBarraMenu {
+  navBars(orderBy: posicaoDaBarraDeNavegacao_ASC) {
+    nome
+    slug
+    urlDeDestino
+  }
+}

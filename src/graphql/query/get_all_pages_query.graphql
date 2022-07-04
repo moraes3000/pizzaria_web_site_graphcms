@@ -1,0 +1,13 @@
+query GetAllPages{
+  paginas{
+    nome
+    slug
+    colorBg{
+      hex
+    }  
+    conteudo{
+      text
+      html
+    }
+  }
+}
