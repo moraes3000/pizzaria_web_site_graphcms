@@ -5,6 +5,7 @@ import { Menu } from './components/Menu'
 import { Contato } from './components/Contato'
 import { HomePage } from "./pages/HomePage";
 import { GetCategoriSlug } from "./components/Menu/GetCategorySlug";
+import { ComponentPaginaDinamica } from "./components/ComponentPaginaDinamica";
 export function Router() {
   return (
     <Routes>
@@ -14,6 +15,7 @@ export function Router() {
       <Route path="/menu/todas" element={<Menu />} />
       <Route path="/menu/:slug" element={<GetCategoriSlug />} />
       <Route path="/contato" element={<Contato />} />
+      <Route path="/p/:slug" element={<ComponentPaginaDinamica />} />
     </Routes>
   )
 }
